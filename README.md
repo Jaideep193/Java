@@ -241,6 +241,10 @@ javac -d out $(find src -name "*.java")
 java -cp out com.jaideep.ecommerce.Main
 ```
 
+Sample seeded users:
+- `demo / demo123` (customer)
+- `admin / ChangeMe#2026` (admin, override with `ECOM_ADMIN_PASSWORD`)
+
 ---
 
 ## Learning Path
