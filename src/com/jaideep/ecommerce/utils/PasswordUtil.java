@@ -44,12 +44,14 @@ public final class PasswordUtil {
     }
 
     private static byte[] pbkdf2(char[] password, byte[] salt) {
+        PBEKeySpec keySpec = new PBEKeySpec(password, salt, ITERATIONS, KEY_LENGTH);
         try {
-            PBEKeySpec keySpec = new PBEKeySpec(password, salt, ITERATIONS, KEY_LENGTH);
             SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(ALGORITHM);
             return secretKeyFactory.generateSecret(keySpec).getEncoded();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new EcommerceException("Password processing failed.");
+        } finally {
+            keySpec.clearPassword();
         }
     }
 }
