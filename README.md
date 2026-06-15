@@ -219,6 +219,28 @@ This repository contains example projects and exercises organized by difficulty:
 - Microservices Architecture
 - Machine Learning Integration (Deeplearning4j)
 
+### Implemented Project: Console E-commerce Application
+
+The repository now includes a complete console-based Java e-commerce application at:
+
+`src/com/jaideep/ecommerce`
+
+#### Included Features
+- User registration/login, authentication, and profile updates
+- Product listing/search/filter and category support
+- Shopping cart add/remove/update with total calculation
+- Order placement, order history, status updates, and invoice generation
+- Payment method selection and transaction history
+- Admin product/inventory/order/report management
+- File persistence using serialization (`data/ecommerce.ser`)
+- MVC-style package structure with service and persistence layers
+
+#### Run Locally
+```bash
+javac -d out $(find src -name "*.java")
+java -cp out com.jaideep.ecommerce.Main
+```
+
 ---
 
 ## Learning Path
