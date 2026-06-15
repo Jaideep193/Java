@@ -24,7 +24,9 @@ public class PaymentService {
         appContext.getAppData().getPaymentsByUserId()
                 .computeIfAbsent(user.getId(), k -> new ArrayList<>())
                 .add(payment);
-        order.setStatus(OrderStatus.CONFIRMED);
+        if (payment.getStatus() == PaymentStatus.SUCCESS) {
+            order.setStatus(OrderStatus.CONFIRMED);
+        }
         appContext.save();
         return payment;
     }
@@ -35,13 +37,16 @@ public class PaymentService {
 
     private static class PaymentFactory {
         private static Payment createPayment(User user, Order order, PaymentMethod method) {
+            PaymentStatus paymentStatus = method == PaymentMethod.CASH_ON_DELIVERY
+                    ? PaymentStatus.PENDING
+                    : PaymentStatus.SUCCESS;
             return new Payment(
                     IdGenerator.newId("PAY"),
                     order.getId(),
                     user.getId(),
                     method,
                     order.getTotalAmount(),
-                    PaymentStatus.SUCCESS,
+                    paymentStatus,
                     LocalDateTime.now()
             );
         }

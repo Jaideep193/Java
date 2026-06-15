@@ -28,7 +28,7 @@ public final class PasswordUtil {
     public static boolean matches(String rawPassword, String storedValue) {
         String[] parts = storedValue.split(":");
         if (parts.length != 2) {
-            return rawPassword.equals(storedValue);
+            return false;
         }
         byte[] salt = Base64.getDecoder().decode(parts[0]);
         byte[] expectedHash = Base64.getDecoder().decode(parts[1]);

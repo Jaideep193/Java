@@ -152,7 +152,7 @@ public class ConsoleUI {
             default -> PaymentMethod.CASH_ON_DELIVERY;
         };
         Payment payment = appController.pay(currentUser, order, paymentMethod);
-        System.out.println("Payment successful. Transaction ID: " + payment.getId());
+        System.out.println("Payment status: " + payment.getStatus() + ". Transaction ID: " + payment.getId());
         System.out.println(appController.invoice(order));
     }
 
