@@ -28,8 +28,8 @@ public class FileDatabaseLayer implements DatabaseLayer {
         }
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file))) {
             Object data = objectInputStream.readObject();
-            if (data instanceof AppData) {
-                return (AppData) data;
+            if (data instanceof AppData appData) {
+                return appData;
             }
             throw new EcommerceException("Invalid data format in persistence file.");
         } catch (IOException | ClassNotFoundException e) {

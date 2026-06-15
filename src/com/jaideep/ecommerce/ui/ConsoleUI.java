@@ -225,7 +225,7 @@ public class ConsoleUI {
             try {
                 return Integer.parseInt(readLine(prompt));
             } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid integer.");
+                System.out.println("Invalid input. Please enter a valid integer (e.g., 1, 2, 3).");
             }
         }
     }
@@ -235,7 +235,7 @@ public class ConsoleUI {
             try {
                 return Double.parseDouble(readLine(prompt));
             } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number.");
+                System.out.println("Invalid input. Please enter a valid decimal number (e.g., 99.99).");
             }
         }
     }

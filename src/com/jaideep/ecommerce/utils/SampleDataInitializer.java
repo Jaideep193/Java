@@ -17,10 +17,12 @@ public final class SampleDataInitializer {
         try {
             authService.register("admin", "admin123", "admin@store.com", "HQ", Role.ADMIN);
         } catch (Exception ignored) {
+            // May already exist in persisted data.
         }
         try {
             authService.register("demo", "demo123", "demo@store.com", "Demo Address", Role.CUSTOMER);
         } catch (Exception ignored) {
+            // May already exist in persisted data.
         }
     }
 }

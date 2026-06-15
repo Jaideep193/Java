@@ -4,6 +4,7 @@ import com.jaideep.ecommerce.exceptions.EcommerceException;
 import com.jaideep.ecommerce.models.Role;
 import com.jaideep.ecommerce.models.User;
 import com.jaideep.ecommerce.utils.IdGenerator;
+import com.jaideep.ecommerce.utils.PasswordUtil;
 
 public class AuthService {
     private final AppContext appContext;
@@ -19,7 +20,7 @@ public class AuthService {
         if (appContext.getAppData().getUsers().containsKey(username.toLowerCase())) {
             throw new EcommerceException("Username already exists.");
         }
-        User user = new User(IdGenerator.newId("USR"), username, password, email, address, role);
+        User user = new User(IdGenerator.newId("USR"), username, PasswordUtil.hash(password), email, address, role);
         appContext.getAppData().getUsers().put(username.toLowerCase(), user);
         appContext.save();
         return user;
@@ -27,7 +28,7 @@ public class AuthService {
 
     public User login(String username, String password) {
         User user = appContext.getAppData().getUsers().get(username.toLowerCase());
-        if (user == null || !user.getPassword().equals(password)) {
+        if (user == null || !PasswordUtil.matches(password, user.getPassword())) {
             throw new EcommerceException("Invalid credentials.");
         }
         return user;
@@ -44,7 +45,7 @@ public class AuthService {
             user.setAddress(address);
         }
         if (password != null && !password.isBlank()) {
-            user.setPassword(password);
+            user.setPassword(PasswordUtil.hash(password));
         }
         appContext.save();
     }
