@@ -1,2 +1,22 @@
+# Compiled output
 out/
+target/
+*.class
+
+# Serialised application data
 data/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.code-workspace
+.classpath
+.project
+.settings/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
