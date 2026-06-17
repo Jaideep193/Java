@@ -371,3 +371,46 @@ This project is open source and available under the [MIT License](LICENSE).
 **Happy Learning! Keep coding and building amazing things with Java! 🎯**
 
 Last Updated: June 2026
+
+
+---
+
+## Architecture: Console E-commerce Application
+
+The e-commerce module under `src/com/jaideep/ecommerce` follows a layered **MVC** architecture:
+
+```
+┌─────────────────────────────────────────────┐
+│              ConsoleUI  (ui/)                │  ← User interaction / menus
+├─────────────────────────────────────────────┤
+│            AppController (controller/)       │  ← Orchestrates calls between layers
+├─────────────────────────────────────────────┤
+│   AuthService │ ProductService │ CartService │
+│   OrderService │ PaymentService │ AdminService│  ← Business logic (services/)
+├─────────────────────────────────────────────┤
+│         AppContext → AppData (services/)     │  ← In-memory state
+├─────────────────────────────────────────────┤
+│      FileDatabaseLayer (persistence/)        │  ← File-based serialisation
+└─────────────────────────────────────────────┘
+```
+
+**Package overview**
+
+| Package | Responsibility |
+|---------|---------------|
+| `models` | Plain data objects (`User`, `Product`, `Order`, `CartItem`, …) |
+| `services` | Stateless business-logic services wired through `AppContext` |
+| `controller` | `AppController` – thin facade called by the UI |
+| `ui` | `ConsoleUI` – all `Scanner`-based I/O in one place |
+| `persistence` | `DatabaseLayer` interface + `FileDatabaseLayer` implementation |
+| `exceptions` | Single `EcommerceException` (unchecked) for domain errors |
+| `utils` | `PasswordUtil` (PBKDF2), `IdGenerator`, `SampleDataInitializer` |
+
+**Environment variables**
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `ECOM_ADMIN_PASSWORD` | `ChangeMe#2026` | Seeded admin password |
+| `ECOM_DATA_PATH` | `data/ecommerce.ser` | Path for the serialised data file |
+
+> **Tip:** Add `data/` to `.gitignore` so the binary data file is never committed to version control.
