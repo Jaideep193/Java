@@ -94,4 +94,35 @@ public class OrderService {
                 .append("---------------------------\n");
         return builder.toString();
     }
+
+                /**
+         * Returns all orders that match the given status.
+         * Useful for admin dashboards that need to filter pending or shipped orders.
+         *
+         * @param status the status to filter by (must not be null)
+         * @return list of matching orders, possibly empty
+         */
+        public List<Order> getOrdersByStatus(OrderStatus status) {
+                    if (status == null) {
+                                    throw new EcommerceException("Order status must not be null.");
+                    }
+                    return getAllOrders().stream()
+                                        .filter(o -> o.getStatus() == status)
+                                        .collect(java.util.stream.Collectors.toList());
+        }
+
+        /**
+         * Returns all orders placed by a specific user.
+         *
+         * @param userId the user whose orders to retrieve
+         * @return list of the user's orders, possibly empty
+         */
+        public List<Order> getOrdersByUser(String userId) {
+                    if (userId == null || userId.isBlank()) {
+                                    throw new EcommerceException("User ID must not be blank.");
+                    }
+                    return getAllOrders().stream()
+                                        .filter(o -> o.getUserId().equals(userId))
+                                        .collect(java.util.stream.Collectors.toList());
+        }
 }
